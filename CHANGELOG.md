@@ -40,13 +40,13 @@ backends, cross-platform installers.
   Windows, LaunchAgent on macOS, .desktop on Linux).
 - **Cross-platform installers** built by GitHub Actions on tag
   push: NSIS + MSI on Windows, DMG on macOS (arm64 + x86_64),
-  .deb + .AppImage on Linux.
+  .deb on Linux.
 
 ### Tech notes
 
-- Final binary size: ~80 MB Linux, ~100 MB Windows (sherpa-onnx
-  ships its DLLs alongside on Windows due to a prebuilt-vs-local
-  MSVC ABI mismatch — see Cargo.toml comment), ~60 MB macOS.
+- Final binary size: ~80 MB Linux, ~100 MB Windows and macOS
+  (sherpa-onnx ships shared runtime libraries alongside due to
+  platform-specific static-link issues — see Cargo.toml comments).
 - First clean build: ~25–35 min (CT2 C++ compile dominates).
   Incremental: ~30 s. CI uses `Swatinem/rust-cache` to skip the
   cold path on subsequent runs.

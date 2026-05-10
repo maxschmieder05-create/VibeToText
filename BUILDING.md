@@ -103,9 +103,10 @@ codegen-units = 1    # better LTO at cost of build time
 panic = "abort"      # smaller binary, no unwind tables
 ```
 
-Final binary size: ~80 MB on Linux, ~100 MB on Windows (sherpa-onnx
-ships its DLLs alongside, see the Cargo.toml comment for why), ~60 MB
-on macOS. About half of that is the statically-linked CT2 runtime.
+Final binary size: ~80 MB on Linux, ~100 MB on Windows and macOS
+(sherpa-onnx ships shared runtime libraries alongside, see the
+Cargo.toml comments for why). About half of that is the statically-
+linked CT2 runtime.
 
 ## Cross-compilation
 
@@ -134,8 +135,8 @@ production build matrix.
 - `src/index.html`, `src/main.js`, `src/styles.css` — settings + dashboard UI.
 - `src/overlay.html`, `src/overlay.js` — listening waveform overlay.
 - `scripts/stage-bundle-resources.cjs` — staging script the Tauri
-  bundler invokes via `beforeBundleCommand` to copy Windows DLLs into
-  the resources dir.
+  bundler invokes via `beforeBundleCommand` to copy sherpa-onnx /
+  ONNX Runtime shared libraries into the resources dir.
 
 ## Releasing
 
@@ -144,7 +145,7 @@ production build matrix.
 2. Update `CHANGELOG.md` with what's new since the last tag.
 3. Commit and push to main.
 4. Tag the commit: `git tag v0.X.Y && git push --tags`.
-5. The `release.yml` workflow runs against all four target platforms
+5. The `release.yml` workflow runs against all target platforms
    (~30–60 min total wall time) and creates a **draft** release with
    the installers attached.
 6. Smoke-test the Windows + macOS installers on real hardware, then
